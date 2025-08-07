@@ -1,0 +1,318 @@
+@prefix core: <http://example.org/core-cloud#> .
+@prefix os: <http://example.org/os-cloud#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+os:OpenStack_Provider a core:CloudProvider ;
+    core:providerName "OpenStack Foundation" ;
+    core:providerID "openstack" ;
+    core:website <https://www.openstack.org/> ;
+    core:headquarters "Austin, USA" ;
+    core:complianceCert "ISO27001" .
+	
+# OpenStack Service Classes
+os:Nova a owl:Class ; rdfs:subClassOf core:ComputeService .
+os:Cinder a owl:Class ; rdfs:subClassOf core:BlockStorageService .
+os:Swift a owl:Class ; rdfs:subClassOf core:ObjectStorageService .
+os:Glance a owl:Class ; rdfs:subClassOf core:ImageService .
+os:Neutron a owl:Class ; rdfs:subClassOf core:NetworkService .
+os:Keystone a owl:Class ; rdfs:subClassOf core:SecurityService .
+os:Ceilometer a owl:Class ; rdfs:subClassOf core:MonitoringService .
+os:Trove a owl:Class ; rdfs:subClassOf core:DatabaseService .
+os:Zaqar a owl:Class ; rdfs:subClassOf core:MessageQueueService .
+os:Qinling a owl:Class ; rdfs:subClassOf core:FunctionExecutionService .
+os:Heat a owl:Class ; rdfs:subClassOf core:OrchestrationService .
+os:Zun a owl:Class ; rdfs:subClassOf core:ContainerService .
+os:OpenStackEmail a owl:Class ; rdfs:subClassOf core:EmailService .
+os:OpenStackCollab a owl:Class ; rdfs:subClassOf core:CollaborationService .
+os:OpenStackDocs a owl:Class ; rdfs:subClassOf core:DocumentManagementService .
+os:Monasca a owl:Class ; rdfs:subClassOf core:AnalyticsService .
+
+# Nova (Compute Service) 
+os:Nova_Instance_1 a os:Nova ;
+    core:serviceName "OpenStack Nova" ;
+    core:serviceID "nova-001" ;
+    core:description "Compute service for provisioning and managing VMs" ;
+    core:billingModel "Pay-per-use" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Nova_QoS .
+
+os:Nova_QoS a core:QoS ;
+    core:latency 12.0 ;
+    core:throughput 450.0 ;
+    core:responseTime 18.0 ;
+    core:availability 99.95 ;
+    core:failureRate 0.02 ;
+    core:MTTR 2.0 .
+
+# Cinder (Block Storage Service)
+os:Cinder_Instance_1 a os:Cinder ;
+    core:serviceName "OpenStack Cinder" ;
+    core:serviceID "cinder-001" ;
+    core:description "Block storage service for persistent volumes" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Cinder_QoS .
+
+os:Cinder_QoS a core:QoS ;
+    core:latency 10.0 ;
+    core:throughput 300.0 ;
+    core:responseTime 12.0 ;
+    core:availability 99.90 ;
+    core:failureRate 0.03 ;
+    core:MTTR 2.5 .
+
+# Swift (Object Storage Service)
+os:Swift_Instance_1 a os:Swift ;
+    core:serviceName "OpenStack Swift" ;
+    core:serviceID "swift-001" ;
+    core:description "Object storage for unstructured data" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Swift_QoS .
+
+os:Swift_QoS a core:QoS ;
+    core:latency 15.0 ;
+    core:throughput 250.0 ;
+    core:responseTime 25.0 ;
+    core:availability 99.85 ;
+    core:failureRate 0.04 ;
+    core:MTTR 3.0 .
+
+# Glance (Image Service)
+os:Glance_Instance_1 a os:Glance ;
+    core:serviceName "OpenStack Glance" ;
+    core:serviceID "glance-001" ;
+    core:description "Image service for discovering, registering, and retrieving virtual machine images" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Glance_QoS .
+
+os:Glance_QoS a core:QoS ;
+    core:latency 8.0 ;
+    core:throughput 400.0 ;
+    core:responseTime 10.0 ;
+    core:availability 99.92 ;
+    core:failureRate 0.01 ;
+    core:MTTR 1.2 .
+
+# Neutron (Network Service)
+os:Neutron_Instance_1 a os:Neutron ;
+    core:serviceName "OpenStack Neutron" ;
+    core:serviceID "neutron-001" ;
+    core:description "Networking service for managing networks and IP addresses" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Neutron_QoS .
+
+os:Neutron_QoS a core:QoS ;
+    core:latency 6.0 ;
+    core:throughput 600.0 ;
+    core:responseTime 8.0 ;
+    core:availability 99.93 ;
+    core:failureRate 0.015 ;
+    core:MTTR 1.0 .
+
+# Keystone (Security Service)
+os:Keystone_Instance_1 a os:Keystone ;
+    core:serviceName "OpenStack Keystone" ;
+    core:serviceID "keystone-001" ;
+    core:description "Identity service used for authentication and high-level authorization" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Keystone_QoS .
+
+os:Keystone_QoS a core:QoS ;
+    core:latency 5.0 ;
+    core:throughput 300.0 ;
+    core:responseTime 6.0 ;
+    core:availability 99.94 ;
+    core:failureRate 0.01 ;
+    core:MTTR 0.9 .
+
+# Ceilometer (Monitoring Service)
+os:Ceilometer_Instance_1 a os:Ceilometer ;
+    core:serviceName "OpenStack Ceilometer" ;
+    core:serviceID "ceilometer-001" ;
+    core:description "Telemetry service for monitoring and metering" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Ceilometer_QoS .
+
+os:Ceilometer_QoS a core:QoS ;
+    core:latency 4.8 ;
+    core:throughput 300.0 ;
+    core:responseTime 5.7 ;
+    core:availability 99.90 ;
+    core:failureRate 0.01 ;
+    core:MTTR 1.1 .
+
+# Trove (Database Service)
+os:Trove_Instance_1 a os:Trove ;
+    core:serviceName "OpenStack Trove" ;
+    core:serviceID "trove-001" ;
+    core:description "Database as a Service for provisioning and managing relational and non-relational databases" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Trove_QoS .
+
+os:Trove_QoS a core:QoS ;
+    core:latency 3.6 ;
+    core:throughput 270.0 ;
+    core:responseTime 5.0 ;
+    core:availability 99.92 ;
+    core:failureRate 0.008 ;
+    core:MTTR 0.9 .
+
+# Zaqar (Message Queue Service)
+os:Zaqar_Instance_1 a os:Zaqar ;
+    core:serviceName "OpenStack Zaqar" ;
+    core:serviceID "zaqar-001" ;
+    core:description "Messaging service for building scalable and reliable distributed applications" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Zaqar_QoS .
+
+os:Zaqar_QoS a core:QoS ;
+    core:latency 3.9 ;
+    core:throughput 290.0 ;
+    core:responseTime 5.2 ;
+    core:availability 99.91 ;
+    core:failureRate 0.009 ;
+    core:MTTR 1.0 .
+
+# Qinling (Function Execution Service)
+os:Qinling_Instance_1 a os:Qinling ;
+    core:serviceName "OpenStack Qinling" ;
+    core:serviceID "qinling-001" ;
+    core:description "Function-as-a-Service (FaaS) for running functions without managing servers" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Qinling_QoS .
+
+os:Qinling_QoS a core:QoS ;
+    core:latency 2.8 ;
+    core:throughput 310.0 ;
+    core:responseTime 4.4 ;
+    core:availability 99.93 ;
+    core:failureRate 0.007 ;
+    core:MTTR 0.8 .
+
+# Heat (Orchestration Service)
+os:Heat_Instance_1 a os:Heat ;
+    core:serviceName "OpenStack Heat" ;
+    core:serviceID "heat-001" ;
+    core:description "Orchestration service to launch multiple composite cloud applications" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Heat_QoS .
+
+os:Heat_QoS a core:QoS ;
+    core:latency 3.3 ;
+    core:throughput 250.0 ;
+    core:responseTime 5.6 ;
+    core:availability 99.89 ;
+    core:failureRate 0.01 ;
+    core:MTTR 1.2 .
+
+# Zun (Container Service)
+os:Zun_Instance_1 a os:Zun ;
+    core:serviceName "OpenStack Zun" ;
+    core:serviceID "zun-001" ;
+    core:description "Service for managing application containers" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Zun_QoS .
+
+os:Zun_QoS a core:QoS ;
+    core:latency 3.4 ;
+    core:throughput 330.0 ;
+    core:responseTime 4.9 ;
+    core:availability 99.92 ;
+    core:failureRate 0.008 ;
+    core:MTTR 0.9 .
+
+# OpenStack Email (Email Service)
+os:OpenStackEmail_Instance_1 a os:OpenStackEmail ;
+    core:serviceName "OpenStack Email" ;
+    core:serviceID "osemail-001" ;
+    core:description "Email messaging service for cloud-based communications" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:OpenStackEmail_QoS .
+
+os:OpenStackEmail_QoS a core:QoS ;
+    core:latency 2.9 ;
+    core:throughput 280.0 ;
+    core:responseTime 4.7 ;
+    core:availability 99.93 ;
+    core:failureRate 0.006 ;
+    core:MTTR 0.7 .
+
+# OpenStack Collaboration (Collaboration Service)
+os:OpenStackCollab_Instance_1 a os:OpenStackCollab ;
+    core:serviceName "OpenStack Collaboration" ;
+    core:serviceID "oscollab-001" ;
+    core:description "Collaboration service for real-time messaging and team workspaces" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:OpenStackCollab_QoS .
+
+os:OpenStackCollab_QoS a core:QoS ;
+    core:latency 3.1 ;
+    core:throughput 260.0 ;
+    core:responseTime 5.1 ;
+    core:availability 99.90 ;
+    core:failureRate 0.007 ;
+    core:MTTR 0.8 .
+
+# OpenStack Docs (Document Management Service)
+os:OpenStackDocs_Instance_1 a os:OpenStackDocs ;
+    core:serviceName "OpenStack Document Management" ;
+    core:serviceID "osdocs-001" ;
+    core:description "Service for managing and storing documents and files collaboratively" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:OpenStackDocs_QoS .
+
+os:OpenStackDocs_QoS a core:QoS ;
+    core:latency 3.7 ;
+    core:throughput 310.0 ;
+    core:responseTime 5.3 ;
+    core:availability 99.91 ;
+    core:failureRate 0.008 ;
+    core:MTTR 0.9 .
+
+# Monasca (Analytics Service)
+os:Monasca_Instance_1 a os:Monasca ;
+    core:serviceName "OpenStack Monasca" ;
+    core:serviceID "monasca-001" ;
+    core:description "Monitoring-as-a-Service solution for high-speed metrics and logs processing" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "regionOne" ;
+    core:hasProvider os:OpenStack_Provider ;
+    core:hasQoS os:Monasca_QoS .
+
+os:Monasca_QoS a core:QoS ;
+    core:latency 4.0 ;
+    core:throughput 320.0 ;
+    core:responseTime 5.6 ;
+    core:availability 99.92 ;
+    core:failureRate 0.007 ;
+    core:MTTR 0.9 .
+	
