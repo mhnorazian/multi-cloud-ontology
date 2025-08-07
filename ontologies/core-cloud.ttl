@@ -1,0 +1,254 @@
+@prefix core: <http://example.org/core-cloud#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#############################################
+# Service Layer Classes
+#############################################
+
+core:CloudService a owl:Class ;
+    rdfs:label "Cloud Service" ;
+    rdfs:comment "A general abstract class for any cloud service (IaaS, PaaS, SaaS)." .
+
+core:IaaSService a owl:Class ;
+    rdfs:label "IaaS Service" ;
+    rdfs:subClassOf core:CloudService ;
+    rdfs:comment "Represents Infrastructure as a Service (IaaS) services." .
+
+core:PaaSService a owl:Class ;
+    rdfs:label "PaaS Service" ;
+    rdfs:subClassOf core:CloudService ;
+    rdfs:comment "Represents Platform as a Service (PaaS) services." .
+
+core:SaaSService a owl:Class ;
+    rdfs:label "SaaS Service" ;
+    rdfs:subClassOf core:CloudService ;
+    rdfs:comment "Represents Software as a Service (SaaS) services." .
+
+#############################################
+# IaaS Services
+#############################################
+
+core:ComputeService a owl:Class ; 
+    rdfs:subClassOf core:IaaSService .
+	
+core:BlockStorageService a owl:Class ; 
+    rdfs:subClassOf core:IaaSService .
+
+core:ObjectStorageService a owl:Class ; 
+    rdfs:subClassOf core:IaaSService .
+
+core:ImageService a owl:Class ; 
+    rdfs:subClassOf core:IaaSService .
+
+core:NetworkService a owl:Class ; 
+    rdfs:subClassOf core:IaaSService .
+
+core:SecurityService a owl:Class ; 
+    rdfs:subClassOf core:IaaSService .
+
+core:MonitoringService a owl:Class ; 
+    rdfs:subClassOf core:IaaSService .
+
+#############################################
+# PaaS Services
+#############################################
+
+core:DatabaseService a owl:Class ; 
+    rdfs:subClassOf core:PaaSService .
+
+core:MessageQueueService a owl:Class ; 
+    rdfs:subClassOf core:PaaSService .
+
+core:FunctionExecutionService a owl:Class ; 
+    rdfs:subClassOf core:PaaSService .
+
+core:OrchestrationService a owl:Class ; 
+    rdfs:subClassOf core:PaaSService .
+
+core:ContainerService a owl:Class ; 
+    rdfs:subClassOf core:PaaSService .
+
+#############################################
+# SaaS Services
+#############################################
+
+core:CRMService a owl:Class ; 
+    rdfs:subClassOf core:SaaSService .
+
+core:EmailService a owl:Class ; 
+    rdfs:subClassOf core:SaaSService .
+
+core:CollaborationService a owl:Class ; 
+    rdfs:subClassOf core:SaaSService .
+
+core:ERPService a owl:Class ; 
+    rdfs:subClassOf core:SaaSService .
+
+core:DocumentManagementService a owl:Class ; 
+    rdfs:subClassOf core:SaaSService .
+	
+core:AnalyticsService a owl:Class ; 
+    rdfs:subClassOf core:SaaSService .
+
+#############################################
+# Core Cloud Provider Class
+#############################################
+
+core:CloudProvider a owl:Class ;
+    rdfs:label "Cloud Provider" ;
+    rdfs:comment "A general class for cloud providers." .
+	
+core:hasProvider a owl:ObjectProperty ;
+    rdfs:label "has Provider" ;
+    rdfs:domain core:CloudService ;
+    rdfs:range core:CloudProvider ;
+    rdfs:comment "Links a cloud service to its provider." .
+	
+#############################################
+# Core QoS Class
+#############################################
+
+core:QoS a owl:Class ;
+    rdfs:label "Quality of Service" ;
+    rdfs:comment "Quality of Service specifications." .
+
+core:hasQoS a owl:ObjectProperty ;
+    rdfs:label "has QoS" ;
+    rdfs:domain core:CloudService ;
+    rdfs:range core:QoS ;
+    rdfs:comment "Associates any service with its QoS." .
+
+#############################################
+# Relations for vertical dependencies
+#############################################
+
+core:dependsOn a owl:ObjectProperty ;
+    rdfs:label "depends On" ;
+    rdfs:domain core:CloudService ;
+    rdfs:range core:CloudService ;
+    rdfs:comment "Represents that a SaaS or PaaS service depends on lower-layer services." .
+
+#############################################
+# Relations for equivalent services
+#############################################
+
+core:hasEquivalentService a owl:ObjectProperty ;
+    rdfs:domain core:CloudService ;
+    rdfs:range core:CloudService ;
+    rdfs:label "has equivalent service" ;
+    rdfs:comment "Points to a functionally equivalent service from another provider." .
+
+#####################################################
+## Datatype Properties
+#####################################################
+
+###CloudService
+	
+core:serviceName a owl:DatatypeProperty ;
+    rdfs:domain core:CloudService ;
+    rdfs:range xsd:string ;
+    rdfs:label "service name" ;
+    rdfs:comment "Name of the service." .
+	
+core:serviceID a owl:DatatypeProperty ;
+    rdfs:domain core:CloudService ;
+    rdfs:range xsd:string ;
+    rdfs:label "service id" ;
+    rdfs:comment "Unique identifier of a service." .
+		
+core:description a owl:DatatypeProperty ;
+    rdfs:domain core:CloudService ;
+    rdfs:range xsd:string ;
+    rdfs:label "description" ;
+    rdfs:comment "Short description of what the service does." .	
+
+core:billingModel a owl:DatatypeProperty ;
+    rdfs:domain core:CloudService ;
+    rdfs:range xsd:string ;
+    rdfs:label "Billing Model" ;
+    rdfs:comment "Type of pricing, e.g., pay-as-you-go, reserved, spot." .
+	
+core:costPerHour a owl:DatatypeProperty ;
+    rdfs:domain core:CloudService ;
+    rdfs:range xsd:float ;
+    rdfs:label "Cost per Hour (USD)" ;
+    rdfs:comment "Hourly billing rate for the cloud service." .
+
+core:dataCenterLocation a owl:DatatypeProperty ;
+    rdfs:domain core:CloudService ;
+    rdfs:range xsd:string ;
+    rdfs:label "Data Center Location" ;
+    rdfs:comment "Region or country where the service is hosted." .
+
+###CloudProvider
+
+core:providerName a owl:DatatypeProperty ;
+    rdfs:domain core:CloudProvider ;
+    rdfs:range xsd:string ;
+    rdfs:label "provider name" ;
+    rdfs:comment "Name of the cloud provider." .
+	
+core:providerID a owl:DatatypeProperty ;
+    rdfs:domain core:CloudProvider ;
+    rdfs:range xsd:string ;
+    rdfs:label "provider ID" ;
+    rdfs:comment "A unique short identifier for the cloud provider, useful for standard matching." .
+
+core:website a owl:DatatypeProperty ;
+    rdfs:domain core:CloudProvider ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "website" ;
+    rdfs:comment "The official website URL of the cloud provider." .
+
+core:headquarters a owl:DatatypeProperty ;
+    rdfs:domain core:CloudProvider ;
+    rdfs:range xsd:string ;
+    rdfs:label "headquarters location" ;
+    rdfs:comment "Geographical location of the cloud provider's headquarters." .
+
+core:complianceCert a owl:DatatypeProperty ;
+    rdfs:domain core:CloudProvider ;
+    rdfs:range xsd:string ;
+    rdfs:label "compliance certifications" ;
+    rdfs:comment "Certifications held by the cloud provider, e.g. ISO27001 or SOC2." .
+
+###QoS
+
+core:latency a owl:DatatypeProperty ;
+    rdfs:domain core:QoS ;
+    rdfs:range xsd:float ;
+    rdfs:label "Latency (ms)" ;
+    rdfs:comment "Time delay in milliseconds between a request and response." .
+
+core:throughput a owl:DatatypeProperty ;
+    rdfs:domain core:QoS ;
+    rdfs:range xsd:float ;
+    rdfs:label "Throughput (MB/s)" ;
+    rdfs:comment "Data transfer rate or IOPS." .
+
+core:responseTime a owl:DatatypeProperty ;
+    rdfs:domain core:QoS ;
+    rdfs:range xsd:float ;
+    rdfs:label "Response Time (ms)" ;
+    rdfs:comment "Average time to respond to a request." .
+
+core:availability a owl:DatatypeProperty ;
+    rdfs:domain core:QoS ;
+    rdfs:range xsd:float ;
+    rdfs:label "Availability (%)" ;
+    rdfs:comment "Percentage of uptime over a time period." .
+
+core:failureRate a owl:DatatypeProperty ;
+    rdfs:domain core:QoS ;
+    rdfs:range xsd:float ;
+    rdfs:label "Failure Rate" ;
+    rdfs:comment "Frequency of failures in service usage." .
+
+core:MTTR a owl:DatatypeProperty ;
+    rdfs:domain core:QoS ;
+    rdfs:range xsd:float ;
+    rdfs:label "Mean Time To Repair (MTTR)" ;
+    rdfs:comment "Average time taken to repair service failures." .
