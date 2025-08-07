@@ -9,3 +9,18 @@ The ontologies support both:
 ---
 
 ## 📂 Repository Structure
+
+multi-cloud-ontology/
+├── ontologies/
+│ ├── core-cloud.ttl # Main core ontology
+│ ├── aws-cloud-mapped.ttl # AWS-specific services mapped to core
+│ └── os-cloud-mapped.ttl # OpenStack services mapped to core
+│
+├── examples/
+│ └── sample-service-query.rq # Example SPARQL query
+│
+├── docs/
+│ └── ontology-diagram.png # Visualization of ontology
+│
+├── LICENSE # CC license
+└── README.md # This file
