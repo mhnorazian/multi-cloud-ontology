@@ -1,0 +1,317 @@
+@prefix core: <http://example.org/core-cloud#> .
+@prefix aws: <http://example.org/aws-cloud#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+aws:AWS_Provider a core:CloudProvider ;
+    core:providerName "Amazon Web Services" ;
+    core:providerID "aws" ;
+    core:website <https://aws.amazon.com/> ;
+    core:headquarters "Seattle, USA" ;
+    core:complianceCert "ISO27001, SOC2" .
+
+# AWS Service Classes
+aws:EC2_Instance a owl:Class ; rdfs:subClassOf core:ComputeService .
+aws:EBS a owl:Class ; rdfs:subClassOf core:BlockStorageService .
+aws:S3 a owl:Class ; rdfs:subClassOf core:ObjectStorageService .
+aws:AMI a owl:Class ; rdfs:subClassOf core:ImageService .
+aws:VPC a owl:Class ; rdfs:subClassOf core:NetworkService .
+aws:SecurityGroups a owl:Class ; rdfs:subClassOf core:SecurityService .
+aws:CloudWatch a owl:Class ; rdfs:subClassOf core:MonitoringService .
+aws:RDS a owl:Class ; rdfs:subClassOf core:DatabaseService .
+aws:SQS a owl:Class ; rdfs:subClassOf core:MessageQueueService .
+aws:Lambda a owl:Class ; rdfs:subClassOf core:FunctionExecutionService .
+aws:CloudFormation a owl:Class ; rdfs:subClassOf core:OrchestrationService .
+aws:EKS a owl:Class ; rdfs:subClassOf core:ContainerService .
+aws:WorkMail a owl:Class ; rdfs:subClassOf core:EmailService .
+aws:Chime a owl:Class ; rdfs:subClassOf core:CollaborationService .
+aws:WorkDocs a owl:Class ; rdfs:subClassOf core:DocumentManagementService .
+aws:QuickSight a owl:Class ; rdfs:subClassOf core:AnalyticsService .
+
+# EC2 (Compute Service)
+aws:EC2_Instance_1 a aws:EC2_Instance ;
+    core:serviceName "Amazon EC2" ;
+    core:serviceID "aws-ec2-001" ;
+    core:description "Amazon Elastic Compute Cloud provides scalable computing capacity." ;
+    core:billingModel "On-Demand" ;
+    core:costPerHour 0.12 ;
+    core:dataCenterLocation "us-east-1" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:EC2_QoS .
+
+aws:EC2_QoS a core:QoS ;
+    core:latency 10.0 ;
+    core:throughput 500.0 ;
+    core:responseTime 20.0 ;
+    core:availability 99.99 ;
+    core:failureRate 0.01 ;
+    core:MTTR 1.5 .
+
+# EBS (Block Storage Service)
+aws:EBS_Instance_1 a aws:EBS ;
+    core:serviceName "Amazon EBS" ;
+    core:serviceID "ebs-001" ;
+    core:description "Elastic Block Store for persistent block storage" ;
+    core:billingModel "Provisioned" ;
+    core:dataCenterLocation "us-east-1" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:EBS_QoS .
+
+aws:EBS_QoS a core:QoS ;
+    core:throughput 800.0 ;
+    core:responseTime 12.0 ;
+    core:availability 99.99 ;
+    core:failureRate 0.005 ;
+    core:MTTR 1.2 .
+
+# S3 (Object Storage Service)
+aws:S3_Instance_1 a aws:S3 ;
+    core:serviceName "Amazon S3" ;
+    core:serviceID "s3-001" ;
+    core:description "Scalable object storage for data backup and archiving" ;
+    core:billingModel "Pay-as-you-go" ;
+    core:dataCenterLocation "us-west-2" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:S3_QoS .
+
+aws:S3_QoS a core:QoS ;
+    core:throughput 1000.0 ;
+    core:responseTime 10.0 ;
+    core:availability 99.999999999 ;
+    core:failureRate 0.001 ;
+    core:MTTR 0.5 .
+
+# AMI (Image Service)
+aws:AMI_Instance_1 a aws:AMI ;
+    core:serviceName "Amazon AMI" ;
+    core:serviceID "ami-001" ;
+    core:description "Amazon Machine Images for launching EC2 instances" ;
+    core:billingModel "Free-tier available" ;
+    core:dataCenterLocation "us-east-2" ;
+	core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:AMI_QoS .
+
+aws:AMI_QoS a core:QoS ;
+    core:latency 1.0 ;
+    core:throughput 100.0 ;
+    core:responseTime 2.0 ;
+    core:availability 100.0 ;
+    core:failureRate 0.0 ;
+    core:MTTR 0.0 .
+
+# VPC (Network Service)
+aws:VPC_Instance_1 a aws:VPC ;
+    core:serviceName "Amazon VPC" ;
+    core:serviceID "vpc-001" ;
+    core:description "Virtual Private Cloud networking service" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "us-west-1" ;
+	core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:VPC_QoS .
+
+aws:VPC_QoS a core:QoS ;
+    core:latency 2.0 ;
+    core:throughput 10000.0 ;
+    core:responseTime 3.0 ;
+    core:availability 99.999 ;
+    core:failureRate 0.0005 ;
+    core:MTTR 0.2 .
+
+# SecurityGroups (Security Service)
+aws:SecurityGroups_Instance_1 a aws:SecurityGroups ;
+    core:serviceName "AWS Security Groups" ;
+    core:serviceID "secgrp-001" ;
+    core:description "Firewall rules for controlling inbound and outbound traffic" ;
+    core:billingModel "Included" ;
+    core:dataCenterLocation "us-east-1" ;
+	core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:SecurityGroups_QoS .
+
+aws:SecurityGroups_QoS a core:QoS ;
+    core:latency 1.0 ;
+    core:throughput 10000.0 ;
+    core:responseTime 1.0 ;
+    core:availability 100.0 ;
+    core:failureRate 0.0 ;
+    core:MTTR 0.0 .
+
+# CloudWatch (Monitoring Service)
+aws:CloudWatch_Instance_1 a aws:CloudWatch ;
+    core:serviceName "Amazon CloudWatch" ;
+    core:serviceID "cw-001" ;
+    core:description "Monitoring and observability service" ;
+    core:billingModel "Pay-as-you-go" ;
+    core:dataCenterLocation "us-east-1" ;
+	core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:CloudWatch_QoS .
+
+aws:CloudWatch_QoS a core:QoS ;
+    core:latency 3.0 ;
+    core:throughput 500.0 ;
+    core:responseTime 5.0 ;
+    core:availability 99.99 ;
+    core:failureRate 0.002 ;
+    core:MTTR 0.8 .
+	
+# RDS (Database Service)
+aws:RDS_Instance_1 a aws:RDS ;
+    core:serviceName "Amazon RDS" ;
+    core:serviceID "rds-001" ;
+    core:description "Relational Database Service" ;
+    core:billingModel "Pay-as-you-go" ;
+    core:dataCenterLocation "us-east-1" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:RDS_QoS .
+
+aws:RDS_QoS a core:QoS ;
+    core:latency 4.0 ;
+    core:throughput 700.0 ;
+    core:responseTime 7.0 ;
+    core:availability 99.95 ;
+    core:failureRate 0.003 ;
+    core:MTTR 1.0 .
+
+# SQS (Message Queue Service)
+aws:SQS_Instance_1 a aws:SQS ;
+    core:serviceName "Amazon SQS" ;
+    core:serviceID "sqs-001" ;
+    core:description "Simple Queue Service for message queuing" ;
+    core:billingModel "Pay-as-you-go" ;
+    core:dataCenterLocation "us-east-2" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:SQS_QoS .
+
+aws:SQS_QoS a core:QoS ;
+    core:latency 2.0 ;
+    core:throughput 10000.0 ;
+    core:responseTime 4.0 ;
+    core:availability 99.99 ;
+    core:failureRate 0.001 ;
+    core:MTTR 0.5 .
+
+# Lambda (Function Execution Service)
+aws:Lambda_Instance_1 a aws:Lambda ;
+    core:serviceName "AWS Lambda" ;
+    core:serviceID "lambda-001" ;
+    core:description "Serverless compute service" ;
+    core:billingModel "Pay-per-invocation" ;
+    core:dataCenterLocation "us-west-1" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:Lambda_QoS .
+
+aws:Lambda_QoS a core:QoS ;
+    core:latency 1.5 ;
+    core:throughput 20000.0 ;
+    core:responseTime 1.0 ;
+    core:availability 99.95 ;
+    core:failureRate 0.0005 ;
+    core:MTTR 0.3 .
+
+# CloudFormation (Orchestration Service)
+aws:CloudFormation_Instance_1 a aws:CloudFormation ;
+    core:serviceName "AWS CloudFormation" ;
+    core:serviceID "cf-001" ;
+    core:description "Infrastructure as Code service" ;
+    core:billingModel "No additional charge" ;
+    core:dataCenterLocation "us-east-1" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:CloudFormation_QoS .
+
+aws:CloudFormation_QoS a core:QoS ;
+    core:latency 2.5 ;
+    core:throughput 300.0 ;
+    core:responseTime 3.0 ;
+    core:availability 99.99 ;
+    core:failureRate 0.001 ;
+    core:MTTR 0.7 .
+
+# EKS (Container Service)
+aws:EKS_Instance_1 a aws:EKS ;
+    core:serviceName "Amazon EKS" ;
+    core:serviceID "eks-001" ;
+    core:description "Managed Kubernetes service" ;
+    core:billingModel "Pay-as-you-go" ;
+    core:dataCenterLocation "us-west-2" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:EKS_QoS .
+
+aws:EKS_QoS a core:QoS ;
+    core:latency 4.5 ;
+    core:throughput 1500.0 ;
+    core:responseTime 6.0 ;
+    core:availability 99.95 ;
+    core:failureRate 0.002 ;
+    core:MTTR 1.1 .
+
+# WorkMail (Email Service)
+aws:WorkMail_Instance_1 a aws:WorkMail ;
+    core:serviceName "Amazon WorkMail" ;
+    core:serviceID "wm-001" ;
+    core:description "Secure and managed business email and calendar service" ;
+    core:billingModel "Pay-as-you-go" ;
+    core:dataCenterLocation "eu-west-1" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:WorkMail_QoS .
+
+aws:WorkMail_QoS a core:QoS ;
+    core:latency 4.0 ;
+    core:throughput 100.0 ;
+    core:responseTime 6.0 ;
+    core:availability 99.9 ;
+    core:failureRate 0.005 ;
+    core:MTTR 2.0 .
+
+# Chime (Collaboration Service)
+aws:Chime_Instance_1 a aws:Chime ;
+    core:serviceName "Amazon Chime" ;
+    core:serviceID "chime-001" ;
+    core:description "Communication service for meetings, chat, and calls" ;
+    core:billingModel "Pay-as-you-go" ;
+    core:dataCenterLocation "us-west-2" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:Chime_QoS .
+
+aws:Chime_QoS a core:QoS ;
+    core:latency 1.8 ;
+    core:throughput 300.0 ;
+    core:responseTime 2.0 ;
+    core:availability 99.9 ;
+    core:failureRate 0.002 ;
+    core:MTTR 0.9 .
+
+# WorkDocs (Document Management Service)
+aws:WorkDocs_Instance_1 a aws:WorkDocs ;
+    core:serviceName "Amazon WorkDocs" ;
+    core:serviceID "wd-001" ;
+    core:description "Secure enterprise document storage and sharing service" ;
+    core:billingModel "Pay-as-you-go" ;
+    core:dataCenterLocation "us-west-1" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:WorkDocs_QoS .
+
+aws:WorkDocs_QoS a core:QoS ;
+    core:latency 3.5 ;
+    core:throughput 400.0 ;
+    core:responseTime 4.5 ;
+    core:availability 99.9 ;
+    core:failureRate 0.003 ;
+    core:MTTR 1.3 .
+
+# QuickSight (Analytics Service)
+aws:QuickSight_Instance_1 a aws:QuickSight ;
+    core:serviceName "Amazon QuickSight" ;
+    core:serviceID "qs-001" ;
+    core:description "Scalable business intelligence (BI) service" ;
+    core:billingModel "Pay-per-session" ;
+    core:dataCenterLocation "us-east-1" ;
+    core:hasProvider aws:AWS_Provider ;
+    core:hasQoS aws:QuickSight_QoS .
+
+aws:QuickSight_QoS a core:QoS ;
+    core:latency 2.2 ;
+    core:throughput 800.0 ;
+    core:responseTime 3.0 ;
+    core:availability 99.95 ;
+    core:failureRate 0.001 ;
+    core:MTTR 0.6 .
+	
