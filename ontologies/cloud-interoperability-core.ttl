@@ -1,0 +1,240 @@
+@prefix cloud: <https://w3id.org/cloud-interoperability#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/cloud-interoperability> a owl:Ontology ;
+    rdfs:label "Cloud Interoperability Core Ontology" ;
+    rdfs:comment "Core ontology providing an agnostic vocabulary for multi-cloud interoperability." .
+
+#################################################################
+# Root Class
+#################################################################
+cloud:CloudInteroperability a owl:Class ;
+    rdfs:label "CloudInteroperability" .
+
+#################################################################
+# Main Core Branches
+#################################################################
+cloud:CloudActor a owl:Class ;
+    rdfs:subClassOf cloud:CloudInteroperability ;
+    rdfs:label "CloudActor" .
+
+cloud:CloudService a owl:Class ;
+    rdfs:subClassOf cloud:CloudInteroperability ;
+    rdfs:label "CloudService" .
+
+cloud:ServiceAttribute a owl:Class ;
+    rdfs:subClassOf cloud:CloudInteroperability ;
+    rdfs:label "ServiceAttribute" .
+
+cloud:QoS a owl:Class ;
+    rdfs:subClassOf cloud:CloudInteroperability ;
+    rdfs:label "QoS" .
+
+cloud:SLA a owl:Class ;
+    rdfs:subClassOf cloud:CloudInteroperability ;
+    rdfs:label "SLA" .
+
+cloud:PricingModel a owl:Class ;
+    rdfs:subClassOf cloud:CloudInteroperability ;
+    rdfs:label "PricingModel" .
+
+cloud:Region a owl:Class ;
+    rdfs:subClassOf cloud:CloudInteroperability ;
+    rdfs:label "Region" .
+
+#################################################################
+# CloudActor Branch
+#################################################################
+cloud:CloudConsumer a owl:Class ;
+    rdfs:subClassOf cloud:CloudActor ;
+    rdfs:label "CloudConsumer" .
+
+cloud:CloudProvider a owl:Class ;
+    rdfs:subClassOf cloud:CloudActor ;
+    rdfs:label "CloudProvider" .
+
+cloud:AWS a owl:Class ;
+    rdfs:subClassOf cloud:CloudProvider ;
+    rdfs:label "AWS" .
+
+cloud:OpenStack a owl:Class ;
+    rdfs:subClassOf cloud:CloudProvider ;
+    rdfs:label "OpenStack" .
+
+#################################################################
+# CloudService Branch
+#################################################################
+cloud:SaaSService a owl:Class ;
+    rdfs:subClassOf cloud:CloudService ;
+    rdfs:label "SaaSService" .
+
+cloud:PaaSService a owl:Class ;
+    rdfs:subClassOf cloud:CloudService ;
+    rdfs:label "PaaSService" .
+
+cloud:IaaSService a owl:Class ;
+    rdfs:subClassOf cloud:CloudService ;
+    rdfs:label "IaaSService" .
+
+cloud:ComputeService a owl:Class ;
+    rdfs:subClassOf cloud:IaaSService ;
+    rdfs:label "ComputeService" .
+
+cloud:StorageService a owl:Class ;
+    rdfs:subClassOf cloud:IaaSService ;
+    rdfs:label "StorageService" .
+
+cloud:BlockStorageService a owl:Class ;
+    rdfs:subClassOf cloud:StorageService ;
+    rdfs:label "BlockStorageService" .
+
+cloud:ObjectStorageService a owl:Class ;
+    rdfs:subClassOf cloud:StorageService ;
+    rdfs:label "ObjectStorageService" .
+
+cloud:DatabaseService a owl:Class ;
+    rdfs:subClassOf cloud:IaaSService ;
+    rdfs:label "DatabaseService" .
+
+cloud:NetworkService a owl:Class ;
+    rdfs:subClassOf cloud:IaaSService ;
+    rdfs:label "NetworkService" .
+
+#################################################################
+# ServiceAttribute & QoS Branch
+#################################################################
+cloud:Cost a owl:Class ;
+    rdfs:subClassOf cloud:ServiceAttribute ;
+    rdfs:label "Cost" .
+
+cloud:CPU a owl:Class ;
+    rdfs:subClassOf cloud:ServiceAttribute ;
+    rdfs:label "CPU" .
+
+cloud:Memory a owl:Class ;
+    rdfs:subClassOf cloud:ServiceAttribute ;
+    rdfs:label "Memory" .
+
+cloud:StorageCapacity a owl:Class ;
+    rdfs:subClassOf cloud:ServiceAttribute ;
+    rdfs:label "StorageCapacity" .
+
+cloud:ResponseTime a owl:Class ;
+    rdfs:subClassOf cloud:QoS ;
+    rdfs:label "ResponseTime" .
+
+cloud:AvailabilityQoS a owl:Class ;
+    rdfs:subClassOf cloud:QoS ;
+    rdfs:label "AvailabilityQoS" .
+
+cloud:Reliability a owl:Class ;
+    rdfs:subClassOf cloud:QoS ;
+    rdfs:label "Reliability" .
+
+cloud:Throughput a owl:Class ;
+    rdfs:subClassOf cloud:QoS ;
+    rdfs:label "Throughput" .
+
+#################################################################
+# Object Properties
+#################################################################
+cloud:providedBy a owl:ObjectProperty ;
+    rdfs:domain cloud:CloudService ;
+    rdfs:range cloud:CloudProvider ;
+    rdfs:label "providedBy" .
+
+cloud:consumedBy a owl:ObjectProperty ;
+    rdfs:domain cloud:CloudService ;
+    rdfs:range cloud:CloudConsumer ;
+    rdfs:label "consumedBy" .
+
+cloud:locatedIn a owl:ObjectProperty ;
+    rdfs:domain cloud:CloudService ;
+    rdfs:range cloud:Region ;
+    rdfs:label "locatedIn" .
+
+cloud:hasQoS a owl:ObjectProperty ;
+    rdfs:domain cloud:CloudService ;
+    rdfs:range cloud:QoS ;
+    rdfs:label "hasQoS" .
+
+cloud:hasSLA a owl:ObjectProperty ;
+    rdfs:domain cloud:CloudService ;
+    rdfs:range cloud:SLA ;
+    rdfs:label "hasSLA" .
+
+cloud:hasPricingModel a owl:ObjectProperty ;
+    rdfs:domain cloud:CloudService ;
+    rdfs:range cloud:PricingModel ;
+    rdfs:label "hasPricingModel" .
+
+cloud:hasServiceAttribute a owl:ObjectProperty ;
+    rdfs:domain cloud:CloudService ;
+    rdfs:range cloud:ServiceAttribute ;
+    rdfs:label "hasServiceAttribute" .
+
+cloud:mappedToCoreService a owl:ObjectProperty ;
+    rdfs:domain owl:Class ;
+    rdfs:range owl:Class ;
+    rdfs:label "mappedToCoreService" .
+
+cloud:equivalentTo a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:domain owl:Class ;
+    rdfs:range owl:Class ;
+    rdfs:label "equivalentTo" .
+
+#################################################################
+# Datatype Properties
+#################################################################
+cloud:hasCPUValue a owl:DatatypeProperty ;
+    rdfs:domain cloud:ComputeService ;
+    rdfs:range xsd:integer ;
+    rdfs:label "hasCPUValue" .
+
+cloud:hasMemoryGB a owl:DatatypeProperty ;
+    rdfs:domain cloud:ComputeService ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "hasMemoryGB" .
+
+cloud:hasStorageGB a owl:DatatypeProperty ;
+    rdfs:domain cloud:StorageService ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "hasStorageGB" .
+
+cloud:hasCostPerHour a owl:DatatypeProperty ;
+    rdfs:domain cloud:CloudService ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "hasCostPerHour" .
+
+cloud:hasAvailabilityPercent a owl:DatatypeProperty ;
+    rdfs:domain cloud:QoS ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "hasAvailabilityPercent" .
+
+cloud:hasLatencyMS a owl:DatatypeProperty ;
+    rdfs:domain cloud:QoS ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "hasLatencyMS" .
+
+cloud:hasThroughputMbps a owl:DatatypeProperty ;
+    rdfs:domain cloud:QoS ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "hasThroughputMbps" .
+
+cloud:hasReliabilityPercent a owl:DatatypeProperty ;
+    rdfs:domain cloud:QoS ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "hasReliabilityPercent" .
+
+cloud:hasName a owl:DatatypeProperty ;
+    rdfs:domain cloud:CloudInteroperability ;
+    rdfs:range xsd:string ;
+    rdfs:label "hasName" .
+
+cloud:hasDescription a owl:DatatypeProperty ;
+    rdfs:domain cloud:CloudInteroperability ;
+    rdfs:range xsd:string ;
+    rdfs:label "hasDescription" .

@@ -1,0 +1,185 @@
+@prefix cloud: <https://w3id.org/cloud-interoperability#> .
+@prefix aws:   <https://w3id.org/aws-cloud#> .
+@prefix os:    <https://w3id.org/openstack-cloud#> .
+@prefix ex:    <https://w3id.org/cloud-instances#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/cloud-instances> a owl:Ontology ;
+    owl:imports <https://w3id.org/cloud-interoperability>,
+                <https://w3id.org/aws-cloud>,
+                <https://w3id.org/openstack-cloud>,
+                <https://w3id.org/cloud-mapping> ;
+    rdfs:label "Cloud Service Populated Instances Dataset (62 Individuals)" .
+
+#################################################################
+# Regions, Providers, Pricing Models & Consumers 
+#################################################################
+ex:MalaysiaRegion a cloud:Region ; rdfs:label "Malaysia Region" .
+ex:USEastRegion a cloud:Region ; rdfs:label "US East Region" .
+ex:EUWestRegion a cloud:Region ; rdfs:label "EU West Region" .
+
+ex:PayAsYouGo a cloud:PricingModel ; rdfs:label "Pay-as-you-go" .
+ex:Reserved1Yr a cloud:PricingModel ; rdfs:label "Reserved 1 Year" .
+
+ex:EnterpriseConsumer a cloud:CloudConsumer ; rdfs:label "Enterprise Consumer" .
+ex:ResearchConsumer a cloud:CloudConsumer ; rdfs:label "Research Consumer" .
+ex:StartupConsumer a cloud:CloudConsumer ; rdfs:label "Startup Consumer" .
+
+#################################################################
+# QoS Profiles 
+#################################################################
+ex:standardQoS a cloud:QoS, cloud:AvailabilityQoS, cloud:ResponseTime, cloud:Reliability, cloud:Throughput ;
+    cloud:hasAvailabilityPercent 99.9 ; cloud:hasLatencyMS 20.0 ; cloud:hasThroughputMbps 1000.0 ; cloud:hasReliabilityPercent 99.9 .
+
+ex:highPerfQoS a cloud:QoS, cloud:AvailabilityQoS, cloud:ResponseTime, cloud:Reliability, cloud:Throughput ;
+    cloud:hasAvailabilityPercent 99.99 ; cloud:hasLatencyMS 5.0 ; cloud:hasThroughputMbps 10000.0 ; cloud:hasReliabilityPercent 99.99 .
+
+ex:basicQoS a cloud:QoS, cloud:AvailabilityQoS, cloud:ResponseTime, cloud:Reliability, cloud:Throughput ;
+    cloud:hasAvailabilityPercent 99.5 ; cloud:hasLatencyMS 50.0 ; cloud:hasThroughputMbps 100.0 ; cloud:hasReliabilityPercent 99.5 .
+
+#################################################################
+# AWS Instances 
+#################################################################
+# Compute (AWS)
+aws:t3_micro a aws:EC2Instance, cloud:ComputeService ;
+    rdfs:label "AWS t3.micro" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:MalaysiaRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasQoS ex:standardQoS ;
+    cloud:hasCPUValue 2 ; cloud:hasMemoryGB 1.0 ; cloud:hasCostPerHour 0.0104 .
+
+aws:t3_small a aws:EC2Instance, cloud:ComputeService ;
+    rdfs:label "AWS t3.small" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:MalaysiaRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasQoS ex:standardQoS ;
+    cloud:hasCPUValue 2 ; cloud:hasMemoryGB 2.0 ; cloud:hasCostPerHour 0.0208 .
+
+aws:m5_large a aws:EC2Instance, cloud:ComputeService ;
+    rdfs:label "AWS m5.large" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:USEastRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasQoS ex:highPerfQoS ;
+    cloud:hasCPUValue 2 ; cloud:hasMemoryGB 8.0 ; cloud:hasCostPerHour 0.096 .
+
+aws:c5_large a aws:EC2Instance, cloud:ComputeService ;
+    rdfs:label "AWS c5.large" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:USEastRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasQoS ex:highPerfQoS ;
+    cloud:hasCPUValue 2 ; cloud:hasMemoryGB 4.0 ; cloud:hasCostPerHour 0.085 .
+
+aws:lambda_fn1 a aws:LambdaFunction, cloud:ComputeService ;
+    rdfs:label "AWS Lambda Compute" ; cloud:providedBy aws:AWSProvider ; cloud:hasCostPerHour 0.000016 .
+
+# Database (AWS)
+aws:rds_mysql a aws:RDSInstance, cloud:DatabaseService ;
+    rdfs:label "AWS RDS MySQL" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:MalaysiaRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasCostPerHour 0.020 .
+
+aws:rds_postgres a aws:RDSInstance, cloud:DatabaseService ;
+    rdfs:label "AWS RDS PostgreSQL" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:USEastRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasCostPerHour 0.025 .
+
+aws:rds_aurora a aws:RDSInstance, cloud:DatabaseService ;
+    rdfs:label "AWS RDS Aurora" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:USEastRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasCostPerHour 0.041 .
+
+# Object Storage (AWS)
+aws:s3_standard a aws:S3Bucket, cloud:ObjectStorageService ;
+    rdfs:label "AWS S3 Standard" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:MalaysiaRegion ;
+    cloud:hasStorageGB 1000.0 ; cloud:hasCostPerHour 0.023 .
+
+aws:s3_ia a aws:S3Bucket, cloud:ObjectStorageService ;
+    rdfs:label "AWS S3 Infrequent Access" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:USEastRegion ;
+    cloud:hasStorageGB 1000.0 ; cloud:hasCostPerHour 0.0125 .
+
+aws:s3_glacier a aws:S3Bucket, cloud:ObjectStorageService ;
+    rdfs:label "AWS S3 Glacier" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:USEastRegion ;
+    cloud:hasStorageGB 1000.0 ; cloud:hasCostPerHour 0.004 .
+
+# Block Storage (AWS)
+aws:ebs_gp3 a aws:EBSVolume, cloud:BlockStorageService ;
+    rdfs:label "AWS EBS gp3" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:MalaysiaRegion ;
+    cloud:hasStorageGB 100.0 ; cloud:hasCostPerHour 0.08 .
+
+aws:ebs_io1 a aws:EBSVolume, cloud:BlockStorageService ;
+    rdfs:label "AWS EBS io1" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:USEastRegion ;
+    cloud:hasStorageGB 500.0 ; cloud:hasCostPerHour 0.125 .
+
+# Network (AWS)
+aws:vpc_main a aws:VPCNetwork, cloud:NetworkService ;
+    rdfs:label "AWS VPC Main" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:MalaysiaRegion .
+
+aws:vpc_sec a aws:VPCNetwork, cloud:NetworkService ;
+    rdfs:label "AWS VPC Secondary" ; cloud:providedBy aws:AWSProvider ; cloud:locatedIn ex:USEastRegion .
+
+# AWS Attributes (2 Individuals)
+aws:az_1a a aws:AvailabilityZone ; rdfs:label "us-east-1a" .
+aws:family_t3 a aws:InstanceFamily ; rdfs:label "t3 Family" .
+
+#################################################################
+# OpenStack Instances 
+#################################################################
+# Compute (OpenStack)
+os:m1_tiny a os:NovaInstance, cloud:ComputeService ;
+    rdfs:label "OpenStack m1.tiny" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:MalaysiaRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasQoS ex:basicQoS ;
+    cloud:hasCPUValue 1 ; cloud:hasMemoryGB 0.5 ; cloud:hasCostPerHour 0.005 .
+
+os:m1_small a os:NovaInstance, cloud:ComputeService ;
+    rdfs:label "OpenStack m1.small" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:MalaysiaRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasQoS ex:standardQoS ;
+    cloud:hasCPUValue 1 ; cloud:hasMemoryGB 2.0 ; cloud:hasCostPerHour 0.015 .
+
+os:m1_medium a os:NovaInstance, cloud:ComputeService ;
+    rdfs:label "OpenStack m1.medium" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:EUWestRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasQoS ex:standardQoS ;
+    cloud:hasCPUValue 2 ; cloud:hasMemoryGB 4.0 ; cloud:hasCostPerHour 0.030 .
+
+os:m1_large a os:NovaInstance, cloud:ComputeService ;
+    rdfs:label "OpenStack m1.large" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:EUWestRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasQoS ex:highPerfQoS ;
+    cloud:hasCPUValue 4 ; cloud:hasMemoryGB 8.0 ; cloud:hasCostPerHour 0.060 .
+
+os:m1_xlarge a os:NovaInstance, cloud:ComputeService ;
+    rdfs:label "OpenStack m1.xlarge" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:EUWestRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasQoS ex:highPerfQoS ;
+    cloud:hasCPUValue 8 ; cloud:hasMemoryGB 16.0 ; cloud:hasCostPerHour 0.120 .
+
+# Database (OpenStack)
+os:trove_mysql a os:TroveDatabase, cloud:DatabaseService ;
+    rdfs:label "OpenStack Trove MySQL" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:MalaysiaRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasCostPerHour 0.018 .
+
+os:trove_postgres a os:TroveDatabase, cloud:DatabaseService ;
+    rdfs:label "OpenStack Trove PostgreSQL" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:EUWestRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasCostPerHour 0.022 .
+
+os:trove_mariadb a os:TroveDatabase, cloud:DatabaseService ;
+    rdfs:label "OpenStack Trove MariaDB" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:EUWestRegion ;
+    cloud:hasPricingModel ex:PayAsYouGo ; cloud:hasCostPerHour 0.019 .
+
+# Object Storage (OpenStack)
+os:swift_standard a os:SwiftStorage, cloud:ObjectStorageService ;
+    rdfs:label "OpenStack Swift Standard" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:MalaysiaRegion ;
+    cloud:hasStorageGB 1000.0 ; cloud:hasCostPerHour 0.020 .
+
+os:swift_archive a os:SwiftStorage, cloud:ObjectStorageService ;
+    rdfs:label "OpenStack Swift Archive" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:EUWestRegion ;
+    cloud:hasStorageGB 1000.0 ; cloud:hasCostPerHour 0.008 .
+
+# Block Storage (OpenStack)
+os:cinder_basic a os:CinderVolume, cloud:BlockStorageService ;
+    rdfs:label "OpenStack Cinder Basic" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:MalaysiaRegion ;
+    cloud:hasStorageGB 100.0 ; cloud:hasCostPerHour 0.07 .
+
+os:cinder_ssd a os:CinderVolume, cloud:BlockStorageService ;
+    rdfs:label "OpenStack Cinder SSD" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:EUWestRegion ;
+    cloud:hasStorageGB 250.0 ; cloud:hasCostPerHour 0.10 .
+
+# Network (OpenStack)
+os:neutron_private a os:NeutronNetwork, cloud:NetworkService ;
+    rdfs:label "OpenStack Neutron Private" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:MalaysiaRegion .
+
+os:neutron_public a os:NeutronNetwork, cloud:NetworkService ;
+    rdfs:label "OpenStack Neutron Public" ; cloud:providedBy os:OpenStackProvider ; cloud:locatedIn ex:EUWestRegion .
+
+# OpenStack Attributes & Tenants (3 Individuals)
+os:tenant_demo a os:Tenant ; rdfs:label "Demo Tenant" .
+os:flavor_m1_small a os:Flavor ; rdfs:label "Flavor m1.small" .
+os:image_ubuntu22 a os:GlanceImage ; rdfs:label "Ubuntu 22.04 LTS Image" .

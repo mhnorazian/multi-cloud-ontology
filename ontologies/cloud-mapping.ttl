@@ -1,0 +1,21 @@
+@prefix cloud: <https://w3id.org/cloud-interoperability#> .
+@prefix aws:   <https://w3id.org/aws-cloud#> .
+@prefix os:    <https://w3id.org/openstack-cloud#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/cloud-mapping> a owl:Ontology ;
+    owl:imports <https://w3id.org/cloud-interoperability>,
+                <https://w3id.org/aws-cloud>,
+                <https://w3ide.org/openstack-cloud> ;
+    rdfs:label "AWS-OpenStack Semantic Mapping Ontology" .
+
+# NOTE: owl:equivalentClass assertions were weakened to prevent Description Logic entailment leakages.
+# Semantic compatibility is recorded using the custom symmetric object property cloud:equivalentTo
+# combined with subclassing under shared parent concepts in core ontology.
+
+aws:EC2Instance cloud:equivalentTo os:NovaInstance .
+aws:S3Bucket cloud:equivalentTo os:SwiftStorage .
+aws:EBSVolume cloud:equivalentTo os:CinderVolume .
+aws:VPCNetwork cloud:equivalentTo os:NeutronNetwork .
+aws:RDSInstance cloud:equivalentTo os:TroveDatabase .
