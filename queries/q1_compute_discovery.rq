@@ -1,0 +1,14 @@
+# Query 1: Cross-Provider Compute Service Discovery
+# Description: Discovers virtual machine instances across AWS and OpenStack providing at least 1 vCPU for less than $0.05/hour.
+PREFIX cloud: <https://w3id.org/cloud-interoperability#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?service ?provider ?cpu ?cost WHERE {
+  ?service rdf:type cloud:ComputeService .
+  ?service cloud:providedBy ?provider .
+  ?service cloud:hasCPUValue ?cpu .
+  ?service cloud:hasCostPerHour ?cost .
+  FILTER (?cpu >= 1 && ?cost < 0.05)
+}
+ORDER BY ?cost

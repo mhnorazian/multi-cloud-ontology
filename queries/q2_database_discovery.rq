@@ -1,0 +1,13 @@
+# Query 2: Cross-Provider Database Service Discovery
+# Description: Discovers managed relational database instances across AWS and OpenStack costing less than $0.03/hour.
+PREFIX cloud: <https://w3id.org/cloud-interoperability#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?service ?provider ?cost WHERE {
+  ?service rdf:type cloud:DatabaseService .
+  ?service cloud:providedBy ?provider .
+  ?service cloud:hasCostPerHour ?cost .
+  FILTER (?cost < 0.03)
+}
+ORDER BY ?cost

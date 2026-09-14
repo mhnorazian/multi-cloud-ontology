@@ -1,0 +1,14 @@
+# Query 8: Memory and Hardware Capacity Filtering
+# Description: Filters compute instances requiring a minimum of 4 GB RAM costing less than $0.04/hour.
+PREFIX cloud: <https://w3id.org/cloud-interoperability#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?service ?provider ?memoryGB ?cost WHERE {
+  ?service rdf:type cloud:ComputeService .
+  ?service cloud:providedBy ?provider .
+  ?service cloud:hasMemoryGB ?memoryGB .
+  ?service cloud:hasCostPerHour ?cost .
+  FILTER (?memoryGB >= 4 && ?cost < 0.04)
+}
+ORDER BY ?cost

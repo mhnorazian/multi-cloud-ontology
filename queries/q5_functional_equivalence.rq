@@ -1,0 +1,11 @@
+# Query 5: Cross-Provider Functional Equivalence Discovery
+# Description: Queries symmetric cloud:equivalentTo relationships to map equivalent AWS and OpenStack services directly.
+PREFIX cloud: <https://w3id.org/cloud-interoperability#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?serviceA ?providerA ?serviceB ?providerB WHERE {
+  ?serviceA cloud:equivalentTo ?serviceB .
+  ?serviceA cloud:providedBy ?providerA .
+  ?serviceB cloud:providedBy ?providerB .
+  FILTER(?providerA != ?providerB)
+}

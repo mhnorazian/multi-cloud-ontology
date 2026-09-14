@@ -1,0 +1,10 @@
+# Query 3: Cross-Provider Storage Service Discovery
+# Description: Retrieves object storage bucket services across AWS (S3) and OpenStack (Swift).
+PREFIX cloud: <https://w3id.org/cloud-interoperability#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?service ?provider ?serviceType WHERE {
+  ?service rdf:type cloud:ObjectStorageService .
+  ?service cloud:providedBy ?provider .
+  OPTIONAL { ?service rdf:type ?serviceType . FILTER(?serviceType != cloud:ObjectStorageService) }
+}

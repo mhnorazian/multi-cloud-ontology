@@ -1,0 +1,14 @@
+# Query 4: Multi-Attribute QoS and Cost Filtering
+# Description: Finds high-availability cloud services (SLA >= 99.9%) across all categories with hourly cost under $0.05.
+PREFIX cloud: <https://w3id.org/cloud-interoperability#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?service ?provider ?availability ?cost WHERE {
+  ?service cloud:providedBy ?provider .
+  ?service cloud:hasCostPerHour ?cost .
+  ?service cloud:hasQoS ?qos .
+  ?qos cloud:hasAvailabilityPercent ?availability .
+  FILTER (?availability >= 99.9 && ?cost < 0.05)
+}
+ORDER BY DESC(?availability) ?cost

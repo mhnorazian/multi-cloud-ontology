@@ -1,0 +1,10 @@
+# Query 6: Region and Location-Aware Resource Filtering
+# Description: Discovers cloud services operating in specific geographical regions or availability domains.
+PREFIX cloud: <https://w3id.org/cloud-interoperability#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?service ?provider ?region WHERE {
+  ?service cloud:providedBy ?provider .
+  ?service cloud:locatedIn ?region .
+}
+ORDER BY ?region ?provider
