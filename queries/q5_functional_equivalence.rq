@@ -1,5 +1,5 @@
 # Query 5: Cross-Provider Functional Equivalence Discovery
-# Description: Queries symmetric cloud:equivalentTo relationships to map equivalent AWS and OpenStack services directly.
+# Description: Queries symmetric cloud:equivalentTo relationships across provider class hierarchies to map equivalent AWS and OpenStack resources.
 PREFIX cloud: <https://w3id.org/cloud-interoperability#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
