@@ -11,12 +11,19 @@ The ontologies support both:
 ## 📂 Repository Structure
 
 multi-cloud-ontology/
-├── ontologies/
-│   ├── cloud-interoperability-core.ttl   # Provider-agnostic core ontology
+├── docs/
+│   ├── Class_Hierarchy_Asserted.png     # Asserted class hierarchy diagram
+│   ├── Class_Hierarchy_Inferred.png     # Inferred class hierarchy diagram
+│   ├── HermiTReasoner_Log.png           # Protégé HermiT reasoning execution log
+│   ├── Ontology-Diagram.png             # Visualization of class hierarchy and properties   
+│   └── OntologyMetrics.png              # Protégé ontology metrics screenshot
+│
+│├── ontologies/
 │   ├── aws-cloud.ttl                     # AWS-specific service taxonomy
-│   ├── os-cloud.ttl                      # OpenStack-specific service taxonomy
+│   ├── cloud-instances.ttl               # Populated benchmark dataset (62 individuals)
+│   ├── cloud-interoperability-core.ttl   # Provider-agnostic core ontology
 │   ├── cloud-mapping.ttl                 # Decoupled semantic rules & symmetric equivalence
-│   └── cloud-instances.ttl               # Populated benchmark dataset (62 individuals)
+│   └── os-cloud.ttl                      # OpenStack-specific service taxonomy
 │
 ├── queries/                              # SPARQL competency query suite
 │   ├── q1_compute_discovery.rq           # Multi-attribute VM filtering (vCPU ≥ 1, Cost < $0.05/hr)
@@ -27,13 +34,6 @@ multi-cloud-ontology/
 │   ├── q6_regional_location.rq           # Region and location-aware multi-cloud filtering
 │   ├── q7_price_performance_ratio.rq     # Price-performance ratio ranking (vCPUs per dollar)
 │   └── q8_memory_capacity_filter.rq      # Hardware RAM capacity filtering (RAM ≥ 4 GB)
-│
-├── docs/
-│   ├── Ontology-Diagram.png              # Visualization of class hierarchy and properties
-│   ├── Class_Hierarchy_Asserted.png     # Asserted class hierarchy diagram
-│   ├── Class_Hierarchy_Inferred.png     # Inferred class hierarchy diagram
-│   ├── OntologyMetrics.png              # Protégé ontology metrics screenshot
-│   └── HermiTReasoner_Log.png           # Protégé HermiT reasoning execution log
 │
 ├── LICENSE                               # CC license
 └── README.md                             # This file
